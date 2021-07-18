@@ -20,13 +20,14 @@ highestScore.appendChild(displayHighestScore);
 displayHighestScore.appendChild(showHighScores);
 
   
-var getName = JSON.parse(localStorage.getItem('key')) || [];
-//var getScores = JSON.parse(localStorage.getItem());
-console.log("get name ", getName);
-showHighScoresText.textContent = getName;
+var getName = JSON.parse(localStorage.getItem('name'));
+var getScore = JSON.parse(localStorage.getItem('score'));
+
+showHighScoresText.textContent = getName +':' +getScore;
 
 document.body.append(highestScore);
 highestScore.append(displayHighestScore);
 displayHighestScore.appendChild(displayHighestScoreText);
 highestScore.appendChild(showHighScores);
 showHighScores.appendChild(showHighScoresText);
+

@@ -116,7 +116,7 @@ let questions = [
 var index = 0;
 var score = 0;
 var startMinutes = 5;
-var interval;
+//var interval;
 let time = startMinutes * 60;
 
 /* START QUIZ button event listener */
@@ -241,9 +241,11 @@ function currentQuestion(index) {
     option4.setAttribute("value", questions[index].choiceD);
 
     document.body.appendChild(options);
-    interval = setInterval(countdown, 1000);
+    countdown();
+    //interval = setInterval(countdown, 1000);
 
     if (index == questions.length - 1) {
+      
       console.log("display last ele");
       
       scoreText.textContent = `Your final Score is : ${score}`;
@@ -264,8 +266,7 @@ function currentQuestion(index) {
       document.body.append(submitBtn);
       displayQuestion.style.display = "none";
       options.style.display = "none";
-
-      clearInterval(interval);          
+     
     }
   }
 }
@@ -387,6 +388,7 @@ showHighScores.setAttribute(
 highestScore.appendChild(displayHighestScore);
 displayHighestScore.appendChild(showHighScores);
 
+   
 
 var submitBtn = document.createElement("BUTTON");
 var submitText = document.createTextNode("SUBMIT");
@@ -405,7 +407,7 @@ goBackBtn.appendChild(goBtnText);
 
 showButtons.setAttribute(
   "style",
-  "margin-left:45%; width:40%;  margin-right:50%; margin-top:20px; display:in-line;"
+  "margin-left:20%; width:40%;  margin-right:50%; margin-top:20px; display:in-line;"
 );
 
 goBackBtn.setAttribute(
@@ -420,7 +422,7 @@ clearScoreBtn.appendChild(clearScoreText);
 
 clearScoreBtn.setAttribute(
   "style",
-  "margin-left:45%; width:25%;  margin-right:50%; margin-top:20px; border-radius:10px; background-color: violet;"
+  "margin-left:45%; width:45%;  margin-right:50%; margin-top:20px; border-radius:10px; background-color: violet;"
 );
 
 
@@ -428,22 +430,21 @@ showButtons.appendChild(goBackBtn);
 showButtons.appendChild(clearScoreBtn);
 
 submitBtn.addEventListener("click", function () {
+  time =0;
+ 
  var highScorers = [{
    name : '',
-   value: ''
+   score: ''
  }];
   highScorers.name = inputInitials.value;
-  highScorers.value = score;
+  highScorers.score = score;
 
-  getName.push(highScorers);
   
-  localStorage.setItem('key', JSON.stringify(getName));
-
-  //console.log("input Name " ,highScorers.name, "score value : ", highScorers.value);
+  localStorage.setItem('name', JSON.stringify(highScorers.name));
+  localStorage.setItem('score', JSON.stringify(highScorers.score));
+ 
   console.log("local store: ", localStorage);
 
- /* var getNames = JSON.parse(localStorage.getItem("initials"));
-  var getScores = JSON.parse(localStorage.getItem("score"));*/
   showHighScoresText.textContent = inputInitials.value +':' +score;
 
   finalScore.style.display = "none";
@@ -464,11 +465,18 @@ submitBtn.addEventListener("click", function () {
 
 });
 
+goBackBtn.addEventListener("click", function () {
+  displayHighestScore.style.display = "none";
+  window.location.reload();
+});
 
-
+clearScoreBtn.addEventListener("click", function () {
+  displayHighestScore.style.display = "none";
+});
 /* For displaying timer */
 
 function countdown() {
+  var interval = setInterval(function() {
   const minutes = Math.floor(time / 60);
   let seconds = time % 60;
   seconds = seconds < 10 ? "0" + seconds : seconds;
@@ -476,4 +484,16 @@ function countdown() {
   time--;
   infoEl.appendChild(timer);
   infoEl.appendChild(a);
+  if(time <= 0) {
+    timer.textContent = `Timer : 0: 00`;
+    clearInterval(interval);  
+  }
+  }, 1000);
+}
+
+function stopTimer() {
+  time = 0;
+  timer.textContent = `Timer : 0: 00`;
+  clearInterval(interval);
+  infoEl.appendChild(timer);
 }
