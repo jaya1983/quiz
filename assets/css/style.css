@@ -1,0 +1,23 @@
+.showResponse {
+    font-weight: bold;
+    background-color: slategray;
+}
+
+/*
+div
+    width: 40%;
+    margin-top: 20px;
+    display: in-line;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+*/
+
+/*button
+
+    width: 25%;
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: violet;
+*/
